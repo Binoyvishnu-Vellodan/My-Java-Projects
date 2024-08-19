@@ -1,5 +1,5 @@
 public class TestData {
-    public string testdata(){
+    public int testdata(){
       String  data="sdfsff";
         return 0;
     }
