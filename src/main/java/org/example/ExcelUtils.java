@@ -14,13 +14,16 @@ import java.util.Map;
 public class ExcelUtils {
     private static Workbook workbook;
     private static Sheet sheet;
-    public ExcelUtils(String filepath,String sheetname)throws IOException{
+//    public ExcelUtils(String filepath,String sheetname)throws IOException{
+//        FileInputStream fis= new FileInputStream(filepath);
+//        workbook= new XSSFWorkbook(fis);
+//        sheet=workbook.getSheet(sheetname);
+//    }
+    public static Map<String, String> getRawDataAsMap(String filepath,String sheetname,int rowNum) throws IOException {
+        Map<String, String> datamap= new HashMap<>();
         FileInputStream fis= new FileInputStream(filepath);
         workbook= new XSSFWorkbook(fis);
         sheet=workbook.getSheet(sheetname);
-    }
-    public Map<String, String> getRawDataAsMap(int rowNum){
-        Map<String, String> datamap= new HashMap<>();
         Row headerRow= sheet.getRow(0);
         Row dataRow= sheet.getRow(rowNum);
 

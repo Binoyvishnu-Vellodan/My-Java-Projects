@@ -1,18 +1,17 @@
 package org.example;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Rectangle;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.sql.SQLOutput;
+import java.time.Duration;
+
+import static com.google.common.util.concurrent.Futures.withTimeout;
 
 public class SeleniumTest extends Selenium_Link{
 
@@ -33,11 +32,15 @@ public class SeleniumTest extends Selenium_Link{
                 WebElement ExploreNow=driver.findElement(By.xpath("//*[contains(@style,'height') and contains(@id,'swiper-wrapper-')and string-length(substring(@id, 16)) >= 16]/descendant::a[text()='Explore Now']"));
                 ExploreNow.click();
                 WebElement scroll = driver.findElement(By.xpath("//*[text()=\"Launch 360 view\"]"));
+                JavascriptExecutor js= (JavascriptExecutor)driver;
+                js.executeScript("arguments[0].scrollIntoView();",scroll);
                 Actions actions = new Actions(driver);
-                actions.moveToElement(scroll).perform();
-                scroll.click();
+//                actions.moveToElement(scroll).perform();
+//                scroll.click();
+                actions.clickAndHold(scroll);
 
-                driver.close();
+
+//                driver.close();
 //                WebElement draggable = driver.findElement(By.id("//img[contains(@src,'ev9/snow-white-pearl/01.png')]"));
 //                Rectangle start = draggable.getRect();
 //                Rectangle finish = driver.findElement(By.id("//img[contains(@src,'ev9/snow-white-pearl/01.png')]")).getRect();

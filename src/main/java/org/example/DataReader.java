@@ -12,21 +12,27 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DataReader {
     public static Map<String, Map<String, String>> getTestData(String excelFilePath, String csvFilePath) throws IOException, CsvException {
-            Map<String, Map<String, String>> testData = readExcelFile(excelFilePath);
-            Map<String, String> locatorData = readCSVFile(csvFilePath);
+        Map<String, Map<String, String>> testData = readExcelFile(excelFilePath);
+        Map<String, String> locatorData = readCSVFile(csvFilePath);
+        // Create a new map to store the final ordered data
+        Map<String, Map<String, String>> orderedTestData = new LinkedHashMap<>();
+
             for (String testCase : testData.keySet()) {
-                testData.get(testCase).putAll(locatorData);
+                Map<String,String> mergedData= new LinkedHashMap<>(locatorData);
+                mergedData.putAll(testData.get(testCase));
+                orderedTestData.put(testCase, mergedData);
             }
-        return testData;
+        return orderedTestData;
     }
 
     private static Map<String, Map<String, String>> readExcelFile(String filePath) throws IOException {
-        Map<String, Map<String, String>> testData = new HashMap<>();
+        HashMap<String, Map<String, String>> testData = new LinkedHashMap<>();
 
         try (FileInputStream fis = new FileInputStream(filePath);
              Workbook workbook = new XSSFWorkbook(fis)) {
@@ -35,7 +41,7 @@ public class DataReader {
 
             for (Row row : sheet) {
                 String testCaseNumber = row.getCell(0).getStringCellValue();
-                Map<String, String> dataMap = new HashMap<>();
+                HashMap<String, String> dataMap = new LinkedHashMap<>();
 
                 for (Cell cell : row) {
                     dataMap.put(sheet.getRow(0).getCell(cell.getColumnIndex()).getStringCellValue(), cell.toString());
@@ -49,7 +55,7 @@ public class DataReader {
     }
 
     private static Map<String, String> readCSVFile(String filePath) throws IOException, CsvException {
-        Map<String, String> xpathData = new HashMap<>();
+        HashMap<String, String> xpathData = new LinkedHashMap<>();
 
         try (CSVReader csvReader = new CSVReader(new FileReader(filePath))) {
             List<String[]> rows = csvReader.readAll();
