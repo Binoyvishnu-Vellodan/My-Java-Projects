@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DataReader {
-    public static Map<String, Map<String, String>> getTestData(String excelFilePath, String csvFilePath) throws IOException, CsvException {
+        Map<String, Map<String, String>> getTestData(String excelFilePath, String csvFilePath) throws IOException, CsvException {
         Map<String, Map<String, String>> testData = readExcelFile(excelFilePath);
         Map<String, String> locatorData = readCSVFile(csvFilePath);
         // Create a new map to store the final ordered data

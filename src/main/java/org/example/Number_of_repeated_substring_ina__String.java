@@ -21,12 +21,12 @@ public class Number_of_repeated_substring_ina__String {
 
         //method returns the most Repeated Word Count
         public static Integer mostRepeatedWordCount(String Str) {
-        String[] words=Str.trim().split("\\s+");
+        String[] words=Str.trim().split(" ");
         int Repeatedword=0;
         int wordcount= words.length;
         System.out.println(wordcount);
-        for (int i = 0; i < wordcount;i++){
-            if(words[i].contains("munnar")){
+        for (String word: words){
+            if(word.equalsIgnoreCase("munnar")){
                 Repeatedword=Repeatedword+1;
             }
         }
